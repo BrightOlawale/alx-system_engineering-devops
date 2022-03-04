@@ -1,2 +1,2 @@
-#!/bin/bash
-echo $PWD
+myloc==$(dirname "$(realpath $0)")
+dirname "$myloc"
