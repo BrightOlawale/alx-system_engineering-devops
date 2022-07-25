@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#Bash script that loops from 1 to 10
+j=0
+while [ $j -lt 10 ]
+do
+    if ((j==3))
+    then
+        echo "bad luck"
+    elif ((j==7))
+    then
+        echo "good luck"
+    else
+        echo "Best Schol"
+    fi
+    ((j++))
+done
