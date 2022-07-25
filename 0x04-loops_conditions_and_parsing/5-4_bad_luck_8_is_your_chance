@@ -3,10 +3,10 @@
 j=0
 while [ $j -lt 10 ]
 do
-    if ((j==3))
+    if ((j == 3))
     then
         echo "bad luck"
-    elif ((j==7))
+    elif ((j == 7))
     then
         echo "good luck"
     else
