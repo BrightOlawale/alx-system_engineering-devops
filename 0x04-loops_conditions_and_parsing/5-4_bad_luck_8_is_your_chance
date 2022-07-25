@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #Bash script that loops from 1 to 10
-j=0
-while ((j < 10))
+j=1
+while ((j <= 10))
 do
-    if ((j == 3))
+    if ((j == 4))
     then
         echo "bad luck"
-    elif ((j == 7))
+    elif ((j == 8))
     then
         echo "good luck"
     else
