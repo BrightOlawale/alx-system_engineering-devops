@@ -11,4 +11,4 @@ def number_of_subscribers(subreddit):
     try:
         return req.json().get("data").get("subscribers")
     except Exception:
-            return 0
+        return 0
