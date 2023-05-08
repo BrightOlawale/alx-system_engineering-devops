@@ -1,0 +1,40 @@
+global
+   ssl-default-bind-options no-sslv3
+   ssl-default-bind-ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256
+
+frontend http-in
+   bind *:80
+   bind *:443 ssl crt /etc/letsencrypt/live/www.goldenbr.tech/fullchain.pem
+   mode http
+   option httplog
+   option forwardfor
+   redirect scheme https if !{ ssl_fc }
+   acl url_root path -i /
+   http-response set-header Content-Type text/html
+   http-response set-header Content-Length 17
+   http-response set-header Holberton-School "Holberton School"
+   http-response set-header Server HAProxy
+   http-response deny unless url_root
+   default_backend servers
+
+backend servers
+   balance roundrobin
+   server 10564-web-01 18.234.249.9:80 check
+   server 10564-web-02 52.23.212.229:80 check
+
+
+defaults
+        log     global
+        mode    http
+        option  httplog
+        option  dontlognull
+        timeout connect 5000
+        timeout client  50000
+        timeout server  50000
+        errorfile 400 /etc/haproxy/errors/400.http
+        errorfile 403 /etc/haproxy/errors/403.http
+        errorfile 408 /etc/haproxy/errors/408.http
+        errorfile 500 /etc/haproxy/errors/500.http
+        errorfile 502 /etc/haproxy/errors/502.http
+        errorfile 503 /etc/haproxy/errors/503.http
+        errorfile 504 /etc/haproxy/errors/504.http
