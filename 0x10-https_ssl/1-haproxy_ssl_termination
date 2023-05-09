@@ -32,22 +32,13 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-frontend http-in
-   bind *:80
-   bind *:443 ssl crt /etc/letsencrypt/live/www.goldenbr.tech/fullchain.pem
-   mode http
-   option httplog
-   option forwardfor
-   redirect scheme https if !{ ssl_fc }
-   acl url_root path -i /
-   http-response set-header Content-Type text/html
-   http-response set-header Content-Length 17
-   http-response set-header Holberton-School "Holberton School"
-   http-response set-header Server HAProxy
-   http-response deny unless url_root
-   default_backend servers
+frontend http
+        bind *:80
+        mode http
+        bind *:443 ssl crt /etc/letsencrypt/live/www.goldenbr.tech/fullchain.pem
+        default_backend web-backend
 
-backend servers
-   balance roundrobin
-   server 10564-web-01 18.234.249.9:80 check
-   server 10564-web-02 52.23.212.229:80 check
+backend web-backend
+        balance roundrobin
+        server 10564-web-01 18.234.249.9:80 check
+        server 10564-web-02 52.23.212.229:80 check
